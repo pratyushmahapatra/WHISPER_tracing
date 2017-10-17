@@ -1,0 +1,20 @@
+# tracer: function
+#
+# entries-in-buffer/entries-written: 185837/20276384   #P:8
+#
+#                              _-----=> irqs-off
+#                             / _----=> need-resched
+#                            | / _---=> hardirq/softirq
+#                            || / _--=> preempt-depth
+#                            ||| /     delay
+#           TASK-PID   CPU#  ||||    TIMESTAMP  FUNCTION
+#              | |       |   ||||       |         |
+          nstore-970   [002] .... 84285.352046: tracing_mark_write: PM_DW:0x100000019648:11:set_data:106
+          nstore-970   [002] .... 84285.352047: tracing_mark_write: PM_N:persist_data:153
+          nstore-970   [002] .... 84285.352047: tracing_mark_write: PM_W:0x100000019648:8:persist_data:153
+          nstore-970   [002] .... 84285.352048: tracing_mark_write: PM_N:persist_data:153
+          nstore-970   [002] .... 84285.352049: tracing_mark_write: PM_N:persist_data:159
+          nstore-970   [002] .... 84285.352049: tracing_mark_write: PM_W:0x10000779b740:8:persist_data:159
+          nstore-970   [002] .... 84285.352050: tracing_mark_write: PM_N:persist_data:159
+          nstore-970   [002] .... 84285.352051: tracing_mark_write: PM_N:persist_data:159
+          nstore-970   [002] .... 84285.352051: tracing_mark_write: PM_W:0x10000779b7c0:8:persist_data:159
