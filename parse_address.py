@@ -36,7 +36,7 @@ del pc_value_pm_accesses[0:3]
 i=0
 total = 0
 pin_pc = {}       # address -> {pc}
-pin_occ = {} # address -> {occurence}
+pin_occ = {}      # pc -> {occurence}
 pin_addr = {}
 pin_addr = set() 
 for lines in pc_value_pm_accesses:
@@ -48,16 +48,16 @@ for lines in pc_value_pm_accesses:
 	del lines[3:5]
 	del lines[1]
 	addr = int(lines[1],0)
-	pin_pc[addr] = int(lines[0][:-1],0) 
-	pin_occ[addr] = 0
-	pc_value_pm_accesses[i] = lines[1]
+	pc = int(lines[0][:-1],0)
+	pin_pc[addr] = pc 
+	pin_occ[pc] = 0
+	pc_value_pm_accesses[i] = pc
 	pin_addr.add(addr) 
 	i = i + 1
 
-#lines -- pc:addr
 
-for n in pc_value_pm_accesses:
-	pin_occ[int(n,0)] += 1
+for pc in pc_value_pm_accesses:
+	pin_occ[pc] += 1
 
 
 tracefile = open(tracefile, "r")
@@ -79,22 +79,27 @@ for lines in traceread:
 
 pin_addr = pin_addr.difference(trace_addr)
 
-pin_addr_list = []
-pin_occ_list = []
-
+pin_pc_set = {}
+pin_pc_set = set()
 
 for addr in pin_addr:
-	pin_addr_list.append(addr)
-	pin_occ_list.append(pin_occ[addr])
+	pin_pc_set.add(pin_pc[addr])
+	
+pin_occ_list = []
+pin_pc_list = []
 
-pin_occ_list, pin_addr_list = zip(*sorted(zip(pin_occ_list, pin_addr_list), reverse=True))
+for pc in pin_pc_set:
+	pin_pc_list.append(pc)
+	pin_occ_list.append(pin_occ[pc])
+
+pin_occ_list, pin_pc_list = zip(*sorted(zip(pin_occ_list, pin_pc_list), reverse=True))
 
 pc_file = open(outputfile, "w")
 pc_file.write("PC Value     :  Number of Accesses\n")
 total = 0
 
-for n in pin_addr_list:
-	pc_file.write("0x%0x       :   %d\n" %(pin_pc[n], pin_occ[n]))
+for n in pin_pc_list:
+	pc_file.write("0x%0x       :   %d\n" %(n, pin_occ[n]))
 	total += pin_occ[n]	 
 
 pc_file.write("Total number of accesses : %d" %total)
