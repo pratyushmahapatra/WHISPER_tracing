@@ -59,14 +59,16 @@ for lines in pc_value_pm_accesses:
 	#del lines[1]
 	addr = int(lines[2],0)
 	pc = int(lines[0][:-1],0)
-	pin_pc[addr] = pc 
-	pin_occ[addr] = 0
 	if (r_w == lines[1]) :
 		filtered_accesses.append(addr)
+		pin_pc[addr] = pc 
 		pin_addr.add(addr) 
+		pin_occ[addr] = 0
 	elif (r_w == '') : 
 		filtered_accesses.append(addr)
 		pin_addr.add(addr) 
+		pin_pc[addr] = pc 
+		pin_occ[addr] = 0
 
 
 for addr in filtered_accesses:
